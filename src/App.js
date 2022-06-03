@@ -4,18 +4,21 @@ import "./App.css";
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   return (
-    <div>
+    <div data-testid="appToShow">
       <div>
         <input
           type="text"
+          data-testid="searchInput"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
           }}
         />
-        <button>Search</button>
+        <button data-testid="searchButton" onClick={() => {}}>
+          Search
+        </button>
       </div>
-      <div>search query: {searchQuery}</div>
+      <div data-testid="searchQuery">search query: {searchQuery}</div>
       <ul>
         <li>list item</li>
       </ul>
