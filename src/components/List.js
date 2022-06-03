@@ -3,7 +3,7 @@ import { parseDate } from "../utils/parseDate";
 
 export default function List({ listData }) {
   return (
-    <ul>
+    <>
       {listData && listData.length === 0 ? (
         <div style={{ textAlign: "center", color: "red" }}>No Match Found</div>
       ) : (
@@ -22,6 +22,6 @@ export default function List({ listData }) {
           </li>
         ))
       )}
-    </ul>
+    </>
   );
 }

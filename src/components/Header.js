@@ -4,7 +4,7 @@ export default function Header({ searchQuery, setSearchQuery, onSearch }) {
   return (
     <div className="contianer__header">
       <div className="container__heading">Demo Assignment App</div>
-      <div className="container__search__box">
+      <form onSubmit={onSearch} className="container__search__box">
         <input
           type="text"
           data-testid="searchInput"
@@ -14,10 +14,8 @@ export default function Header({ searchQuery, setSearchQuery, onSearch }) {
             setSearchQuery(e.target.value);
           }}
         />
-        <button data-testid="searchButton" onClick={onSearch}>
-          Search
-        </button>
-      </div>
+        <button data-testid="searchButton">Search</button>
+      </form>
       <div className="container__info" data-testid="searchQuery">
         search query: {searchQuery}
       </div>

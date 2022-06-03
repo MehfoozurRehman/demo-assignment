@@ -8,15 +8,16 @@ import List from "./components/List";
 const queryClient = new QueryClient();
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [listData, setListData] = useState([]);
+
   const endpoint = "https://api.github.com/graphql";
 
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
-      authorization: "Bearer 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",
-      "User-Agent": "Awesome-Octocat-App",
+      authorization: `Bearer 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`,
+      // "User-Agent": "Awesome-Octocat-App",
     },
   });
 
@@ -39,15 +40,19 @@ export default function App() {
       }
     }
   `;
+
   async function getData() {
     const data = await graphQLClient.request(query);
     setListData(data.viewer.repositories.nodes);
+    setLoading(false);
   }
+
   useEffect(() => {
     getData();
   }, []);
 
-  function onSearch() {
+  function onSearch(e) {
+    e.preventDefault();
     if (searchQuery !== "") {
       setListData(
         listData.filter(
@@ -74,7 +79,13 @@ export default function App() {
           setSearchQuery={setSearchQuery}
           onSearch={onSearch}
         />
-        <List listData={listData} />
+        <ul>
+          {loading ? (
+            <div style={{ textAlign: "center" }}>Loading...</div>
+          ) : (
+            <List listData={listData} />
+          )}
+        </ul>
       </div>
     </QueryClientProvider>
   );
