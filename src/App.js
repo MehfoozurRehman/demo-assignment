@@ -10,6 +10,7 @@ const queryClient = new QueryClient();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [listAfterFilter, setListAfterFilter] = useState([]);
   const [listData, setListData] = useState([]);
 
   const endpoint = "https://api.github.com/graphql";
@@ -44,6 +45,7 @@ export default function App() {
   async function getData() {
     const data = await graphQLClient.request(query);
     setListData(data.viewer.repositories.nodes);
+    setListAfterFilter(data.viewer.repositories.nodes);
     setLoading(false);
   }
 
@@ -54,7 +56,7 @@ export default function App() {
   function onSearch(e) {
     e.preventDefault();
     if (searchQuery !== "") {
-      setListData(
+      setListAfterFilter(
         listData.filter(
           (item) =>
             item.nameWithOwner.includes("MehfoozurRehman") &&
@@ -83,7 +85,7 @@ export default function App() {
           {loading ? (
             <div style={{ textAlign: "center" }}>Loading...</div>
           ) : (
-            <List listData={listData} />
+            <List listData={listAfterFilter} />
           )}
         </ul>
       </div>
