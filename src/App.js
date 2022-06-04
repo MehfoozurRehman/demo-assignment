@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GraphQLClient, gql } from "graphql-request";
-import "./App.css";
 import Header from "./components/Header";
 import List from "./components/List";
+import "./App.css";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ export default function App() {
 
   const graphQLClient = new GraphQLClient(endpoint, {
     headers: {
-      authorization: `Bearer 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`,
+      authorization: `Bearer ${process.env.REACT_APP_API_KEY}`,
       // "User-Agent": "Awesome-Octocat-App",
     },
   });
