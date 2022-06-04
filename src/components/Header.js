@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header({ searchQuery, setSearchQuery, onSearch }) {
   return (
-    <div className="contianer__header">
+    <div className="contianer__header" data-testid="divToShow">
       <div className="container__heading">Demo Assignment App</div>
       <form onSubmit={onSearch} className="container__search__box">
         <input

@@ -1,12 +1,10 @@
 import { act, fireEvent, render } from "@testing-library/react";
 import App from "../App";
 
-it("render app", async () => {
+it("search input response validator", async () => {
   const { getByTestId } = render(<App />);
-  const div = getByTestId("appToShow");
   const searchInput = getByTestId("searchInput");
   const searchQuery = getByTestId("searchQuery");
-  expect(div).toBeTruthy();
   expect(searchInput).toBeTruthy();
   expect(searchQuery).toBeTruthy();
   await act(async () => {
