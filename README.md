@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# demo-assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React app that loads the signed-in user's GitHub repositories through GitHub's GraphQL API, lists them, and filters them by search text.
 
-## Available Scripts
+**Status:** Working demo. The GitHub query, list rendering and search filter are implemented and one test exists, but the app runs as a demo and has no deployment URL.
 
-In the project directory, you can run:
+## The problem
 
-### `npm start`
+Browsing your own GitHub repositories means opening the GitHub page and searching there. This app shows the repositories in its own list and lets you filter them by typing, as an assignment-style exercise in GraphQL and React Query.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## What it does
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Requests the viewer's first 100 repositories from `https://api.github.com/graphql` with `graphql-request` (`src/App.js`).
+- Shows a loading state until the request completes.
+- Filters the list as the user types in a search box, comparing the typed text with each repository.
+- Formats repository dates with a small helper in `src/utils/parseDate.js`.
+- Wraps the app in a React Query provider and includes one test for the search input (`src/test/App.test.js`).
 
-### `npm test`
+## How it's built
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Create React App (`react-scripts`) with React and React Query.
+- GraphQL requests are sent with `graphql-request` to GitHub's endpoint. The query asks only for the fields the list displays.
+- Firebase Hosting is configured to serve the `build` folder (`firebase.json`).
+- The UI is split into a `Header` and a `List` component in `src/components`.
 
-### `npm run build`
+## Running it locally
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+npm start           # react-scripts start
+npm test            # react-scripts test
+npm run build       # react-scripts build into build/
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The GitHub request needs an access token for the viewer. The token setup is not documented in the repo.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## What's left
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The token is written into the request header in `src/App.js`. It should be read from an environment variable, and any value already committed should be revoked.
+- The test checks only the search input and the text it displays. The GitHub request, the list and date formatting have no tests.
+- Repositories are fetched only for the first 100 results, with no pagination.
+- Firebase is configured, but no deployed URL is documented.
+- The original Create React App template README was replaced with this file.
