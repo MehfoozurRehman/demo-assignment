@@ -36,7 +36,7 @@ The GitHub request needs an access token for the viewer. The token setup is not 
 
 ## What's left
 
-- The token is written into the request header in `src/App.js`. It should be read from an environment variable, and any value already committed should be revoked.
+- The GitHub request reads its token from `REACT_APP_API_KEY`. Variables with the `REACT_APP_` prefix are built into the browser bundle, so the token is visible to anyone who loads the app. The request should move behind a server. The repo does not document where the variable is set.
 - The test checks only the search input and the text it displays. The GitHub request, the list and date formatting have no tests.
 - Repositories are fetched only for the first 100 results, with no pagination.
 - Firebase is configured, but no deployed URL is documented.
